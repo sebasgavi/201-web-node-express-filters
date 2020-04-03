@@ -11,9 +11,24 @@ app.use(express.static('public'));
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
+// /producto/:name/:id -> se utiliza para enviar la o las variables principales (leemos en req.params.name)
+// ?weight_lt=4000 -> se utiliza para variables opcionales (leemos en req.query.weight_lt)
+
 app.get('/', function (req, res) {
+  console.log(req.query);
+
+  var filtered;
+
+  if(req.query.price_lt){
+    filtered = products.filter(function (elem) {
+      if(elem.price < req.query.price_lt){
+        return true;
+      }
+    });
+  }
+
   var context = {
-    list: products,
+    list: filtered,
   }
   res.render('list', context);
 });
