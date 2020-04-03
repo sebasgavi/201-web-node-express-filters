@@ -27,6 +27,14 @@ app.get('/', function (req, res) {
     });
   }
 
+  if(req.query.search){
+    filtered = products.filter(function (elem) {
+      if(elem.name.includes(req.query.search)){
+        return true;
+      }
+    });
+  }
+
   var context = {
     list: filtered,
   }
