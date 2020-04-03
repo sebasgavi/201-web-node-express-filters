@@ -1,1 +1,24 @@
 <h1>Lista de productos</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>Precio</th>
+      <th>Peso</th>
+      <th>Calificación</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each list}}
+      <tr>
+        <td>{{ @index }}</td>
+        <td>{{ name }}</td>
+        <td>{{ price }}</td>
+        <td>{{ weight }}</td>
+        <td>{{ rating }}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
