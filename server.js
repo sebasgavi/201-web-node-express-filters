@@ -23,7 +23,7 @@ app.get('/', function (req, res) {
   console.log(req.query);
 
   // arreglo filtrado
-  var filtered;
+  var filtered = products;
 
   // si el usuario pidió filtrar por precio
   if(req.query.price_lt){
