@@ -28,16 +28,27 @@ app.get('/', function (req, res) {
   // si el usuario pidió filtrar por precio
   if(req.query.price_lt){
     // creo la copia del arreglo filtrado
-    filtered = products.filter(function (elem) {
+    filtered = filtered.filter(function (elem) {
       // si el precio del elemento es menor al precio que el usuario preguntó
-      if(elem.price < req.query.price_lt){
+      if(elem.price <= req.query.price_lt){
+        return true;
+      }
+    });
+  }
+
+  // si el usuario pidió filtrar por precio
+  if(req.query.price_gt){
+    // creo la copia del arreglo filtrado
+    filtered = filtered.filter(function (elem) {
+      // si el precio del elemento es menor al precio que el usuario preguntó
+      if(elem.price >= req.query.price_gt){
         return true;
       }
     });
   }
 
   if(req.query.search){
-    filtered = products.filter(function (elem) {
+    filtered = filtered.filter(function (elem) {
       // si el nombre del producto incluye lo que el usuario buscó
       if(elem.name.includes(req.query.search)){
         return true;

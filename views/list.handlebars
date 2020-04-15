@@ -1,5 +1,21 @@
 <h1>Lista de productos</h1>
 
+<nav>
+  Filtro por precio
+  <select>
+    <option value="" disabled="true" selected="true">Selecciona una opción...</option>
+    <option value="30000">Menor a $30.000</option>
+    <option value="100000">Menor a $100.000</option>
+  </select>
+
+  <p>
+    <label for="amount">Price range:</label>
+    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+  </p>
+  <div id="slider-range"></div>
+  <button class="searchbtn">Buscar</button>
+</nav>
+
 <table class="table">
   <thead>
     <tr>
@@ -14,7 +30,10 @@
     {{#each list}}
       <tr>
         <td>{{ @index }}</td>
-        <td>{{ name }}</td>
+        <td>
+          <img src="{{ img }}" alt="">
+          {{ name }}
+        </td>
         <td>{{ price }}</td>
         <td>{{ weight }}</td>
         <td>{{ rating }}</td>
@@ -22,3 +41,8 @@
     {{/each}}
   </tbody>
 </table>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/scripts/client.js"></script>

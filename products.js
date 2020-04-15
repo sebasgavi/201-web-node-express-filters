@@ -4,6 +4,7 @@ var products = [
     price: 10000,
     weight: 2000,
     rating: 3.6,
+    img: '/images/224209.jpg',
   },
   {
     name: 'cosa y',
