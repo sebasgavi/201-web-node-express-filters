@@ -31,8 +31,10 @@
       <tr>
         <td>{{ @index }}</td>
         <td>
-          <img src="{{ img }}" alt="">
-          {{ name }}
+          <a href="/producto/{{ name }}/{{ @index }}">
+            <img src="{{ img }}" alt="">
+            {{ name }}
+          </a>
         </td>
         <td>{{ price }}</td>
         <td>{{ weight }}</td>

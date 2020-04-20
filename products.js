@@ -1,6 +1,6 @@
 var products = [
   {
-    name: 'camiseta x',
+    name: 'camiseta x editada',
     price: 10000,
     weight: 2000,
     rating: 3.6,

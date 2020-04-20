@@ -18,6 +18,13 @@ app.set('view engine', 'handlebars');
 // /producto/:name/:id -> se utiliza para enviar la o las variables principales (leemos en req.params.name)
 // ?weight_lt=4000 -> se utiliza para variables opcionales (leemos en req.query.weight_lt)
 
+app.get('/producto/:name/:id', function (req, res) {
+  var id = parseInt(req.params.id);
+  var product = products[id];
+
+  res.render('product', product);
+});
+
 app.get('/', function (req, res) {
   // imprimir todas las variables del query
   console.log(req.query);
