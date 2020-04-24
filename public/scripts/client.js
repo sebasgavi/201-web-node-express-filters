@@ -14,9 +14,9 @@ select.addEventListener('change', function(ev){
 $( "#slider-range" ).slider({
   range: true,
   min: 0,
-  max: 160000,
-  step: 10000,
-  values: [ 75, 300 ],
+  max: 250,
+  step: 5,
+  values: [ 0, 250 ],
   slide: function( event, ui ) {
     //console.log(ui.values)
     $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
@@ -29,5 +29,10 @@ button.addEventListener('click', function(){
   var valueA = $( "#slider-range" ).slider( "values", 0 );
   var valueB = $( "#slider-range" ).slider( "values", 1 );
   url = url + '?price_gt=' + valueA + '&price_lt=' + valueB;
+  
+  var input = document.querySelector('.search_input');
+  var search = input.value;
+  url = url + '&search=' + search;
+  
   location.href = url;
 });

@@ -1,9 +1,11 @@
 // importar módulos
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 const express = require('express');
 const exphbs = require('express-handlebars');
 
-// importar productos
-const products = require('./products');
+// 
+const configureRoutes = require('./routes');
 
 // crear servidor
 const app = express();
@@ -15,60 +17,23 @@ app.use(express.static('public'));
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
-// /producto/:name/:id -> se utiliza para enviar la o las variables principales (leemos en req.params.name)
-// ?weight_lt=4000 -> se utiliza para variables opcionales (leemos en req.query.weight_lt)
+// Connection URL
+const url = 'mongodb://localhost:27017';
 
-app.get('/producto/:name/:id', function (req, res) {
-  var id = parseInt(req.params.id);
-  var product = products[id];
+// Database Name
+const dbName = 'store';
 
-  res.render('product', product);
-});
+// Create a new MongoClient
+const client = new MongoClient(url);
 
-app.get('/', function (req, res) {
-  // imprimir todas las variables del query
-  console.log(req.query);
+// Use connect method to connect to the Server
+client.connect(function(err) {
+  assert.equal(null, err);
+  console.log("Connected successfully to server");
 
-  // arreglo filtrado
-  var filtered = products;
+  const db = client.db(dbName);
 
-  // si el usuario pidió filtrar por precio
-  if(req.query.price_lt){
-    // creo la copia del arreglo filtrado
-    filtered = filtered.filter(function (elem) {
-      // si el precio del elemento es menor al precio que el usuario preguntó
-      if(elem.price <= req.query.price_lt){
-        return true;
-      }
-    });
-  }
-
-  // si el usuario pidió filtrar por precio
-  if(req.query.price_gt){
-    // creo la copia del arreglo filtrado
-    filtered = filtered.filter(function (elem) {
-      // si el precio del elemento es menor al precio que el usuario preguntó
-      if(elem.price >= req.query.price_gt){
-        return true;
-      }
-    });
-  }
-
-  if(req.query.search){
-    filtered = filtered.filter(function (elem) {
-      // si el nombre del producto incluye lo que el usuario buscó
-      if(elem.name.includes(req.query.search)){
-        return true;
-      }
-    });
-  }
-
-  // crear el contexto
-  var context = {
-    list: filtered,
-  }
-  // renderizar el archivo list.handlebars con el contexto creado
-  res.render('list', context);
+  configureRoutes(app, db);
 });
 
 // iniciar servidor en puerto 3000
