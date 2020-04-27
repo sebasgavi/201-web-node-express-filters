@@ -101,7 +101,16 @@ function configureRoutes (app, db) {
     
   });
 
-  //app.get()
+  // mostrar el formulario al usuario
+  app.get('/checkout', function (req, res) {
+    res.render('checkout');
+  });
+
+  // recibir información del usuario
+  app.post('/checkout', function (req, res) {
+    console.log(req.body);
+    res.send('test');
+  });
 }
 
 module.exports = configureRoutes;
