@@ -1,14 +1,40 @@
 const assert = require('assert');
+const ObjectId = require('mongodb').ObjectId;
 
 function configureRoutes (app, db) {
   // /producto/:name/:id -> se utiliza para enviar la o las variables principales (leemos en req.params.name)
   // ?weight_lt=4000 -> se utiliza para variables opcionales (leemos en req.query.weight_lt)
 
-  app.get('/producto/:name/:id', function (req, res) {
-    var id = parseInt(req.params.id);
-    var product = products[id];
+  // GET - Traer o leer información del servidor
+  // POST - Agregar nueva información al servidor
+  // PUT - Actualizar información ya existente en el servidor
+  // DELETE - Borrar información del servidor
 
-    res.render('product', product);
+  app.get('/producto/:name/:id', function (req, res) {
+    if(req.params.id.length != 24){
+      res.redirect('/404');
+    }
+
+    const filter = {
+      _id: {
+        $eq: new ObjectId(req.params.id)
+      }
+    };
+    // Get the documents collection
+    const collection = db.collection('products');
+    // Find some documents
+    collection.find(filter).toArray(function(err, docs) {
+      assert.equal(err, null);
+
+      if(docs.length == 0){
+        res.redirect('/404');
+      }
+      
+      // crear el contexto
+      var context = docs[0];
+      // renderizar el archivo list.handlebars con el contexto creado
+      res.render('product', context);
+    });
   });
 
   app.get('/', function (req, res) {
@@ -45,6 +71,10 @@ function configureRoutes (app, db) {
       });
     }
 
+    if(filters.$and.length === 0){
+      delete filters.$and;
+    }
+
 
     var sortings = {};
     if(req.query.sort == 'price_desc'){
@@ -70,6 +100,8 @@ function configureRoutes (app, db) {
     });
     
   });
+
+  //app.get()
 }
 
 module.exports = configureRoutes;
