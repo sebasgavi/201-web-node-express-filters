@@ -17,8 +17,43 @@
     <input placeholder="Address" name="address" required="true">
   </label>
   <label>
+    Type
+    <select name="type">
+      <option>One</option>
+      <option>Two</option>
+    </select>
+  </label>
+  <label>
     Age (optional)
     <input placeholder="Age" name="age" type="number">
   </label>
+
+  <div class="btngroup">
+    <input name="payment_type" type="hidden">
+    <div class="btngroup__item">
+      Visa
+    </div>
+    <div class="btngroup__item">
+      Master Card
+    </div>
+    <div class="btngroup__item">
+      asdasdas
+    </div>
+    <div class="btngroup__item">
+      6a5656
+    </div>
+  </div>
+
   <button>Send</button>
 </form>
+
+<script>
+  var typeInput = document.querySelector('[name="payment_type"]');
+  var buttons = document.querySelectorAll('.btngroup__item');
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function(ev){
+      typeInput.value = ev.target.innerText;
+      console.log('funcionando', ev.target.innerText);
+    });
+  });
+</script>
