@@ -1,13 +1,24 @@
 <h1>Checkout</h1>
 
+{{#if showError}}
+<section>
+  <h3>Error!</h3>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque eligendi officia odit obcaecati recusandae saepe pariatur eaque minima ipsum odio, aliquam error repudiandae reprehenderit, ullam soluta doloremque quisquam possimus mollitia.</p>
+</section>
+{{/if}}
+
 <form action="/checkout" method="POST">
   <label>
     Name
-    <input placeholder="Name" name="firstname" required="true">
+    <input placeholder="Name" name="firstname">
   </label>
   <label>
     Address
     <input placeholder="Address" name="address" required="true">
+  </label>
+  <label>
+    Age (optional)
+    <input placeholder="Age" name="age" type="number">
   </label>
   <button>Send</button>
 </form>

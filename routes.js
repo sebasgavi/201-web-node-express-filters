@@ -13,6 +13,7 @@ function configureRoutes (app, db) {
   app.get('/producto/:name/:id', function (req, res) {
     if(req.params.id.length != 24){
       res.redirect('/404');
+      return;
     }
 
     const filter = {
@@ -28,6 +29,7 @@ function configureRoutes (app, db) {
 
       if(docs.length == 0){
         res.redirect('/404');
+        return;
       }
       
       // crear el contexto
@@ -103,13 +105,35 @@ function configureRoutes (app, db) {
 
   // mostrar el formulario al usuario
   app.get('/checkout', function (req, res) {
-    res.render('checkout');
+    console.log(req.query.error);
+    var context = {
+      showError: req.query.error,
+    }
+    res.render('checkout', context);
   });
 
   // recibir información del usuario
   app.post('/checkout', function (req, res) {
     console.log(req.body);
-    res.send('test');
+
+    var { firstname, address } = req.body;
+
+    req.body.creation_date = new Date();
+
+    if(!firstname || !address){
+      //res.send('error');
+      res.redirect('/checkout?error=true');
+      return;
+    }
+
+    const collection = db.collection('orders');
+    collection.insertOne(req.body);
+    //res.send('test');
+    res.redirect('/confirmation');
+  });
+
+  app.get('/confirmation', function(req, res) {
+    res.send('gracias por tu compra');
   });
 }
 
