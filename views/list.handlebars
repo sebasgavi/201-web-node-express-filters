@@ -27,6 +27,7 @@
       <th>Precio</th>
       <th>Peso</th>
       <th>Calificación</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -35,13 +36,21 @@
         <td>{{ @index }}</td>
         <td>
           <a href="/producto/{{ name }}/{{ _id }}">
-            <img src="{{ img }}" alt="">
             {{ name }}
           </a>
         </td>
-        <td>{{ price }}</td>
+        <td class="product__price">$ {{ price }}</td>
         <td>{{ weight }}</td>
         <td>{{ rating }}</td>
+        <td>
+          <button class="product__add_to_cart"
+            data-img="{{ img }}"
+            data-name="{{ name }}"
+            data-price="{{ price }}"
+            data-id="{{ _id }}">
+            Agregar al carrito
+          </button>
+        </td>
       </tr>
     {{/each}}
   </tbody>
