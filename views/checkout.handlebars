@@ -7,7 +7,7 @@
 </section>
 {{/if}}
 
-<form action="/checkout" method="POST">
+<form class="checkoutform" action="/checkout" method="POST">
   <label>
     Name
     <input placeholder="Name" name="firstname">
@@ -44,16 +44,9 @@
     </div>
   </div>
 
+  <input name="products" type="hidden" class="checkoutform__products">
+
   <button>Send</button>
 </form>
 
-<script>
-  var typeInput = document.querySelector('[name="payment_type"]');
-  var buttons = document.querySelectorAll('.btngroup__item');
-  buttons.forEach(function (btn) {
-    btn.addEventListener('click', function(ev){
-      typeInput.value = ev.target.innerText;
-      console.log('funcionando', ev.target.innerText);
-    });
-  });
-</script>
+<script src="/scripts/checkout.js"></script>
